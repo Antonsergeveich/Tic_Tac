@@ -20,6 +20,14 @@ int main()
 	char winner = ' ';
 
 	resetBoard();
+
+	while (winner == ' ' && checkFreeSpaces() != 0)
+	{
+		printBoard();
+
+		playerMove();
+	}
+
 	printBoard();
 
 
@@ -48,11 +56,39 @@ void printBoard()
 }
 int checkFreeSpaces()
 {
+	int freeSpaces = 9;
 
+	for (int i = 0; i < 3; i++) 
+	{
+		for (int j = 0; j < 3; j++) 
+		{
+			if (board[i][j] != ' ')
+			{
+				freeSpaces--;
+			}
+		}
+	}
+	return freeSpaces;
 }
 void playerMove()
 {
+	int x;
+	int y;
+	printf("Enter row #(1-3): ");
+	scanf("%d", &x);
+	x--;
+	printf("Enter column #(1-3): ");
+	scanf("%d", &y);
+	y--;
 
+	if (board[x][y] != ' ') 
+	{
+		printf("Invalid move!\n");
+	}
+	else
+	{
+		board[x][y] = PLAYER;
+	}
 }
 void computerMove()
 {
@@ -60,7 +96,7 @@ void computerMove()
 }
 char checkWinner()
 {
-
+	return 'O';
 }
 void printWinner(char winner)
 {
