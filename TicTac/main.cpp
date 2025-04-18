@@ -19,30 +19,43 @@ void printWinner(char);
 int main()
 {
 	char winner = ' ';
+	char response;
 
-	resetBoard();
-
-	while (winner == ' ' && checkFreeSpaces() != 0)
+	do
 	{
+		winner = ' ';
+		response = ' ';
+		resetBoard();
+
+		while (winner == ' ' && checkFreeSpaces() != 0)
+		{
+			printBoard();
+
+			playerMove();
+			winner = checkWinner();
+			if (winner != ' ' || checkFreeSpaces() == 0)
+			{
+				break;
+			}
+
+			computerMove();
+			winner = checkWinner();
+			if (winner != ' ' || checkFreeSpaces() == 0)
+			{
+				break;
+			}
+		}
+
 		printBoard();
+		printWinner(winner);
 
-		playerMove();
-		winner = checkWinner();
-		if (winner != ' ' || checkFreeSpaces() == 0)
-		{
-			break;
-		}
+		printf("\nWould you like to play again? (Y/N): ");
+		scanf("%c", &response);
+		scanf("%c", &response);
+		response = toupper(response);
+	} while (response == 'Y');
 
-		computerMove();
-		winner = checkWinner();
-		if (winner != ' ' || checkFreeSpaces() == 0)
-		{
-			break;
-		}
-	}
-
-	printBoard();
-	printWinner(winner);
+	printf("Thanks for playing!");
 
 	return 0;
 }
@@ -71,9 +84,9 @@ int checkFreeSpaces()
 {
 	int freeSpaces = 9;
 
-	for (int i = 0; i < 3; i++) 
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++) 
+		for (int j = 0; j < 3; j++)
 		{
 			if (board[i][j] != ' ')
 			{
@@ -132,9 +145,9 @@ void computerMove()
 char checkWinner()
 {
 	//check rows
-	for (int i = 0; i < 3; i++) 
+	for (int i = 0; i < 3; i++)
 	{
-		if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) 
+		if (board[i][0] == board[i][1] && board[i][0] == board[i][2])
 		{
 			return board[i][0];
 		}
@@ -148,24 +161,24 @@ char checkWinner()
 		}
 	}
 	//check diagonals
-		if (board[0][0] == board[1][1] && board[0][0] == board[2][2])
-		{
-			return board[0][0];
-		}
-		if (board[0][2] == board[1][1] && board[0][2] == board[2][0])
-		{
-			return board[0][2];
-		}
+	if (board[0][0] == board[1][1] && board[0][0] == board[2][2])
+	{
+		return board[0][0];
+	}
+	if (board[0][2] == board[1][1] && board[0][2] == board[2][0])
+	{
+		return board[0][2];
+	}
 
-		return ' ';
+	return ' ';
 }
 void printWinner(char winner)
 {
-	if (winner == PLAYER) 
+	if (winner == PLAYER)
 	{
 		printf("YOU WIN!");
 	}
-	else if(winner == COMPUTER)
+	else if (winner == COMPUTER)
 	{
 		printf("YOU LOSE!");
 	}
